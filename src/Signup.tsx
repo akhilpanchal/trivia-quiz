@@ -38,6 +38,7 @@ function Signup() {
 
     return (
         <Form {...layout} form={form} name="sign-up" onFinish={onFinish}>
+            <h1>Welcome to Trivia Qwiz</h1>
             <Form.Item name="userName" label="User Name" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>
