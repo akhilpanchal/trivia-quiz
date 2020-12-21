@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-import UserPrefContext from "./UserPrefContext"
+import UserPrefContext from "../UserPrefContext"
 
 
 const Welcome = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import {getQuestion} from "./service/questions";
+import {getQuestion} from "../service/questions";
 
 type QuestionProps = {
     type?: string;

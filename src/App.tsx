@@ -4,13 +4,13 @@ import { HeartFilled } from "@ant-design/icons";
 import {BrowserRouter, Link, Route, Switch, useHistory} from "react-router-dom";
 
 import "antd/dist/antd.css";
-import "./App.css";
+import "./styles/App.css";
 
 import UserPrefContext from "./UserPrefContext";
-import Signup from "./Signup";
+import Signup from "./components/Signup";
 import { getUserPref } from "./service/localStorage";
-import Question from "./Question";
-import Welcome from "./Welcome";
+import Question from "./components/Question";
+import Welcome from "./components/Welcome";
 
 const { Header, Content, Footer } = Layout;
 

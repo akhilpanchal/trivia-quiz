@@ -1,8 +1,6 @@
 import React from "react";
-import "antd/dist/antd.css";
-import "./App.css";
 import { Button, Form, Input, Select, Space } from "antd";
-import { setUserPref } from "./service/localStorage";
+import { setUserPref } from "../service/localStorage";
 
 const { Option } = Select;
 
