@@ -1,15 +1,16 @@
 import React from "react";
-import { Layout, Button } from "antd";
+import { Layout } from "antd";
 import { HeartFilled } from "@ant-design/icons";
-import {BrowserRouter, Link, Route, Switch, useHistory} from "react-router-dom";
+import {BrowserRouter, Switch} from "react-router-dom";
 
 import "antd/dist/antd.css";
 import "./styles/App.css";
 
-import UserPrefContext from "./UserPrefContext";
-import Signup from "./components/Signup";
 import { getUserPref } from "./service/localStorage";
-import Question from "./components/Question";
+import UserPrefContext from "./UserPrefContext";
+import { RouteAuthenticated, RouteUnauthenticated} from "./components/routeUtils"
+import Signup from "./components/Signup";
+import Quiz from "./components/Quiz";
 import Welcome from "./components/Welcome";
 
 const { Header, Content, Footer } = Layout;
@@ -29,15 +30,9 @@ function App() {
                         <Content style={{ padding: '0 50px' }}>
                             <div className="site-layout-content">
                                 <Switch>
-                                    <Route path="/signup">
-                                        <Signup />
-                                    </Route>
-                                    <Route path="/quiz">
-                                        <Question />
-                                    </Route>
-                                    <Route path="">
-                                        <Welcome />
-                                    </Route>
+                                    <RouteUnauthenticated path="/signup" component={Signup} />
+                                    <RouteAuthenticated path="/quiz" component={Quiz} />
+                                    <RouteAuthenticated path="/dashboard" component={Welcome} />
                                 </Switch>
                             </div>
                         </Content>

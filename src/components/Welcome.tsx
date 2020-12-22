@@ -1,15 +1,11 @@
 import { Button } from "antd";
 import React from "react";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import UserPrefContext from "../UserPrefContext"
 
 
 const Welcome = () => {
     const userPref = React.useContext(UserPrefContext);
-
-    if (!userPref) {
-        return <Redirect to={"/signup"} />
-    }
 
     return (
         <>
