@@ -9,9 +9,11 @@ import "./styles/App.css";
 import { getUserPref } from "./service/localStorage";
 import UserPrefContext from "./UserPrefContext";
 import { RouteAuthenticated, RouteUnauthenticated} from "./components/routeUtils"
-import Signup from "./components/Signup";
+import Login from "./components/Login";
 import Quiz from "./components/Quiz";
 import Welcome from "./components/Welcome";
+import Home from "./components/Home";
+import Signout from "./components/Signout";
 
 const { Header, Content, Footer } = Layout;
 
@@ -25,20 +27,19 @@ function App() {
         <BrowserRouter>
             <UserPrefContext.Provider value={userPref}>
                 <div className="App">
+                    <Signout />
                     <Layout>
-                        <Header></Header>
-                        <Content style={{ padding: '0 50px' }}>
-                            <div className="site-layout-content">
-                                <Switch>
-                                    <RouteUnauthenticated path="/signup" component={Signup} />
-                                    <RouteAuthenticated path="/quiz" component={Quiz} />
-                                    <RouteAuthenticated path="/dashboard" component={Welcome} />
-                                </Switch>
-                            </div>
-                        </Content>
+                        <div className="site-layout-content">
+                            <Switch>
+                                <RouteUnauthenticated path="/login" component={Login} />
+                                <RouteAuthenticated path="/dashboard" component={Welcome} />
+                                <RouteUnauthenticated path="/quiz" component={Quiz} />
+                                <RouteUnauthenticated path="" component={Home} />
+                            </Switch>
+                        </div>
                     </Layout>
                 </div>
-                    <Footer style={{ textAlign: 'center' }}>Made with <HeartFilled /> by Algorythm</Footer>
+                <Footer style={{ textAlign: 'center', backgroundColor: "transparent" }}>Made with <HeartFilled style={{color: "#4282c6"}} /> by <a href="www.github.com/akhilpanchal">Algorythm</a></Footer>
             </UserPrefContext.Provider>
             
         </BrowserRouter>
