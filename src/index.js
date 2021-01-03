@@ -15,6 +15,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyBAK-p1AWf9u5i1-rkPnb2xfRuOx5niFgY",
     authDomain: "trivia-kviz.firebaseapp.com",
     projectId: "trivia-kviz",
+    databaseUrl: "https://trivia-kviz-default-rtdb.firebaseio.com/",
     storageBucket: "trivia-kviz.appspot.com",
     messagingSenderId: "551019412003",
     appId: "1:551019412003:web:576c9392e2cb6879ee8f96",

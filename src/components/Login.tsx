@@ -1,8 +1,7 @@
 import React from "react";
-import { Button, Form, Input, Space } from "antd";
-import { setUserPref } from "../service/localStorage";
-import { useHistory } from "react-router-dom";
 import firebase from "firebase";
+import { useHistory } from "react-router-dom";
+import { Button, Form, Space } from "antd";
 
 const layout = {
     labelCol: { span: 9 },
@@ -18,14 +17,8 @@ function Login() {
     const history = useHistory();
 
     const onFinish = React.useCallback(() => {
-        const values = form.getFieldsValue();
-        setUserPref({values});
         history.push("/quiz");
-    }, [form, history]);
-
-    const onReset = React.useCallback(() => {
-        form.resetFields();
-    }, [form]);
+    }, [history]);
 
     const handleSignupWithGoogle = React.useCallback(() => {
         var provider = new firebase.auth.GoogleAuthProvider();
@@ -34,35 +27,19 @@ function Login() {
 
         firebase.auth().signInWithPopup(provider)
             .then((result: any) => {
-                console.log("result:: ", result);
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const token = result.credential.accessToken;
-                // The signed-in user info.
-                const user = result.user;
-                // ...
                 history.push("/dashboard");
             })
             .catch((error) => {
-                console.log("error:: ", error);
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // The email of the user's account used.
-                var email = error.email;
-                // The firebase.auth.AuthCredential type that was used.
-                var credential = error.credential;
-                // ...
+                console.error("error:: ", error);
             });
-          
+    }, [history]);
 
-
-    }, []);
     return (
-        <Form {...layout} form={form} name="sign-up" onFinish={onFinish}>
+        <Form {...layout} form={form} name="sign-in" onFinish={onFinish}>
             <Form.Item {...tailLayout}>
                 <Space>
                     <Button type="primary" onClick={handleSignupWithGoogle}>
-                        Sign Up with Google
+                        Sign In with Google
                     </Button>
                 </Space>
             </Form.Item>

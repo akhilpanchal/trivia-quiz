@@ -3,7 +3,7 @@ import React from "react";
 import { AllHtmlEntities as htmlEntities } from "html-entities";
 
 import {getQuestion} from "../service/questions";
-import UserPrefContext from "../UserPrefContext";
+import CurrentUserContext from "../CurrentUserContext";
 import {Question} from "../types";
 import shuffle from "../utils/shuffle";
 
@@ -36,7 +36,7 @@ const Quiz: React.FC<QuestionProps> = (props) => {
         setQuestionIndex(questionIndex - 1);
     }, [questionIndex]);
 
-    const userPref = React.useContext(UserPrefContext);
+    const userPref = React.useContext(CurrentUserContext);
 
     React.useEffect(() => {
         const fetchQuestions = async () => {

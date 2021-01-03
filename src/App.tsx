@@ -1,46 +1,56 @@
 import React from "react";
-import { Layout } from "antd";
+import { Layout, Spin } from "antd";
 import { HeartFilled } from "@ant-design/icons";
 import {BrowserRouter, Switch} from "react-router-dom";
 
 import "antd/dist/antd.css";
 import "./styles/App.css";
 
-import { getUserPref } from "./service/localStorage";
-import UserPrefContext from "./UserPrefContext";
+import CurrentUserContext from "./CurrentUserContext";
 import { RouteAuthenticated, RouteUnauthenticated} from "./components/routeUtils"
 import Login from "./components/Login";
 import Quiz from "./components/Quiz";
 import Welcome from "./components/Welcome";
 import Home from "./components/Home";
 import Signout from "./components/Signout";
+import firebase from "firebase";
 
-const { Header, Content, Footer } = Layout;
+const { Footer } = Layout;
 
 function App() {
-    const userPref = React.useMemo(() => {
-        const value = getUserPref();
-        return value ? JSON.parse(value) : null;
+    const [ready, setReady] = React.useState<boolean>(false);
+    const [currentUser, setCurrentUser] = React.useState<any>(null);
+
+    React.useEffect(() => {
+        firebase.auth().onAuthStateChanged((user) => {
+            setCurrentUser(user);
+            setReady(true);
+        });
     }, []);
 
     return (
         <BrowserRouter>
-            <UserPrefContext.Provider value={userPref}>
+            <CurrentUserContext.Provider value={currentUser}>
                 <div className="App">
-                    <Signout />
-                    <Layout>
-                        <div className="site-layout-content">
-                            <Switch>
-                                <RouteUnauthenticated path="/login" component={Login} />
-                                <RouteAuthenticated path="/dashboard" component={Welcome} />
-                                <RouteUnauthenticated path="/quiz" component={Quiz} />
-                                <RouteUnauthenticated path="" component={Home} />
-                            </Switch>
-                        </div>
-                    </Layout>
+                    { ready ?
+                        <>
+                            <Signout />
+                            <Layout>
+                                <div className="site-layout-content">
+                                    <Switch>
+                                        <RouteUnauthenticated path="/login" component={Login} />
+                                        <RouteAuthenticated path="/dashboard" component={Welcome} />
+                                        <RouteUnauthenticated path="/quiz" component={Quiz} />
+                                        <RouteUnauthenticated path="" component={Home} />
+                                    </Switch>
+                                </div>
+                            </Layout>
+                        </> :
+                        <Spin size="large" />
+                    }
                 </div>
-                <Footer style={{ textAlign: 'center', backgroundColor: "transparent" }}>Made with <HeartFilled style={{color: "#4282c6"}} /> by <a href="www.github.com/akhilpanchal">Algorythm</a></Footer>
-            </UserPrefContext.Provider>
+                <Footer style={{ textAlign: 'center', backgroundColor: "transparent" }}>Made with <HeartFilled style={{color: "#4282c6"}} /> by <a href="www.github.com/akhilpanchal">Alg0Rythm</a></Footer>
+            </CurrentUserContext.Provider>
             
         </BrowserRouter>
     );

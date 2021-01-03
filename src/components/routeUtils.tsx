@@ -1,11 +1,11 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import UserPrefContext from '../UserPrefContext';
+import CurrentUserContext from '../CurrentUserContext';
 
 export const RouteAuthenticated = ({ component: Component, path }: RouteProps) => {
-    const userPref = React.useContext(UserPrefContext);
+    const currentUser = React.useContext(CurrentUserContext);
 
-    if (!userPref) {
+    if (!currentUser) {
         return <Redirect to="/signup" />;
     }
 
@@ -14,9 +14,9 @@ export const RouteAuthenticated = ({ component: Component, path }: RouteProps) =
 
 
 export const RouteUnauthenticated = ({ component: Component, path }: RouteProps) => {
-    const userPref = React.useContext(UserPrefContext);
+    const currentUser = React.useContext(CurrentUserContext);
 
-    if (userPref) {
+    if (currentUser) {
         return <Redirect to="/dashboard" />;
     }
 
