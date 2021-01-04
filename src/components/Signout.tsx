@@ -2,21 +2,23 @@ import { PoweroffOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import firebase from "firebase";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import CurrentUserContext from "../CurrentUserContext";
 
 const Signout = () => {
     const currentUser = React.useContext(CurrentUserContext);
 
+    const history = useHistory();
+
     const handleSignout = React.useCallback(() => {
-        console.log("signing out")
-        firebase.auth().signOut().then(() => {
-            // Sign-out successful.
-            console.log("Sign-out successful");
-        }).catch((error) => {
-            console.log("Sign-out failed", error);
-          });
-          
-    }, []);
+        firebase.auth().signOut()
+            .then(() => {
+                history.push("");
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, [history]);
 
     if (!currentUser) {
         return null;
