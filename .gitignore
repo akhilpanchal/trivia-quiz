@@ -1,6 +1,6 @@
 .DS_Store
 .firebase/
-build/**/*
+build/
 node_modules/
 .eslintcache
 firebase-*
