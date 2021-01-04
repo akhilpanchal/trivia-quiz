@@ -1,16 +1,24 @@
 import { Button } from "antd";
 import React from "react";
-import {Link} from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import CurrentUserContext from "../CurrentUserContext"
+import { setUser } from "../service/user";
 
 
 const Welcome = () => {
-    const userPref = React.useContext(CurrentUserContext);
+    const { email, displayName } = React.useContext(CurrentUserContext);
+
+    const history = useHistory();
+
+    const handleStartQuiz = React.useCallback(() => {
+        // setUser({ email, score: 0 })
+        history.push("/quiz");
+    }, [history]);
 
     return (
         <>
-            <h1>Welcome back, {userPref?.displayName}!</h1>
-            <Link to="/quiz"><Button type="primary">Continue to Quiz</Button></Link>
+            <h1>Welcome back, {displayName}!</h1>
+            <Button type="primary" onClick={handleStartQuiz}>Continue to Quiz</Button>
         </>
     )
 };

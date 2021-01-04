@@ -20,7 +20,7 @@ export const RouteUnauthenticated = ({ component: Component, path }: RouteProps)
         return <Redirect to="/dashboard" />;
     }
 
-  return <Route component={Component} path={path} />;
+    return <Route component={Component} path={path} />;
 };
 
 

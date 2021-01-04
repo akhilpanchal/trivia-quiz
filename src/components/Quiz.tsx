@@ -6,37 +6,63 @@ import {getQuestion} from "../service/questions";
 import CurrentUserContext from "../CurrentUserContext";
 import {Question} from "../types";
 import shuffle from "../utils/shuffle";
+import { getUser, addUserListener, setUser, removeUserListener } from "../service/user";
 
 type QuestionProps = {
     type?: string;
 };
 
 const Quiz: React.FC<QuestionProps> = (props) => {
+    const { email } = React.useContext(CurrentUserContext);
+
     const [questions, setQuestions] = React.useState<Array<Question>>([]);
     const [questionIndex, setQuestionIndex] = React.useState<number>(0);
     const [userAnswer, setUserAnswer] = React.useState<string>();
     const [score, setScore] = React.useState<number>(0);
 
+    console.log("score::: ", score);
     const currentQuestion = questions[questionIndex];
 
     const handleSelect = React.useCallback((e) => {
         setUserAnswer(e.target.value);
     }, []);
 
+    React.useEffect(() => {
+        // Get current Score from DB
+        const fetchUser = async () => {
+            const user: any = await getUser(email);
+            const userVal = user.val();
+            setScore(userVal.score);
+        };
+        fetchUser();
+
+        // Subscribe to score updates
+        addUserListener(email, (snapshot) => {
+            setScore(snapshot?.val().score);
+        })
+
+        return () => {
+            removeUserListener(email);
+        };
+    }, []);
+
     const next = React.useCallback(() => {
-        console.log("userAnswer: ", userAnswer);
-        console.log("currentQuestion.correct_answer: ", currentQuestion.correct_answer);
         if (userAnswer === currentQuestion.correct_answer) {
-            setScore(score + 1);
+            setUser({email, score: score + 1});
         }
         setQuestionIndex(questionIndex + 1);
-    }, [score, userAnswer, questionIndex, currentQuestion]);
+    }, [email, score, userAnswer, questionIndex, currentQuestion]);
+
+    const finish = React.useCallback(() => {
+        if (userAnswer === currentQuestion.correct_answer) {
+            setUser({email, score: score + 1});
+        }
+        setQuestionIndex(questionIndex + 1);
+    }, [email, score, userAnswer, questionIndex, currentQuestion]);
 
     const back = React.useCallback(() => {
         setQuestionIndex(questionIndex - 1);
     }, [questionIndex]);
-
-    const userPref = React.useContext(CurrentUserContext);
 
     React.useEffect(() => {
         const fetchQuestions = async () => {
@@ -79,11 +105,11 @@ const Quiz: React.FC<QuestionProps> = (props) => {
                     Back
                 </Button> : null}
                 {
-                    questionIndex < 9 ?
+                    questionIndex < 4 ?
                         <Button type="primary" htmlType="button" onClick={next}>
                             Next
                         </Button> :
-                        <Button type="primary" htmlType="button">
+                        <Button type="primary" htmlType="button" onClick={finish}>
                           Finish
                       </Button>
                 }

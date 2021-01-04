@@ -10,7 +10,7 @@ const Home = () => {
             title="Hey there, Welcome to Trivia Quiz!"
             extra={
                 <>
-                    <Link to="/quiz"><Button>Continue as Guest</Button></Link>
+                    <Link to="/guest"><Button>Continue as Guest</Button></Link>
                     <Link to="/login"><Button type="primary">Login</Button></Link>
                 </>
             }

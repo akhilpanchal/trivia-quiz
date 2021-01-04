@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout, Spin } from "antd";
 import { HeartFilled } from "@ant-design/icons";
-import {BrowserRouter, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 
 import "antd/dist/antd.css";
 import "./styles/App.css";
@@ -14,6 +14,7 @@ import Welcome from "./components/Welcome";
 import Home from "./components/Home";
 import Signout from "./components/Signout";
 import firebase from "firebase";
+import Guest from "./components/Guest";
 
 const { Footer } = Layout;
 
@@ -39,8 +40,9 @@ function App() {
                                 <div className="site-layout-content">
                                     <Switch>
                                         <RouteUnauthenticated path="/login" component={Login} />
+                                        <RouteUnauthenticated path="/guest" component={Guest} />
                                         <RouteAuthenticated path="/dashboard" component={Welcome} />
-                                        <RouteUnauthenticated path="/quiz" component={Quiz} />
+                                        <Route path="/quiz" component={Quiz} />
                                         <RouteUnauthenticated path="" component={Home} />
                                     </Switch>
                                 </div>
