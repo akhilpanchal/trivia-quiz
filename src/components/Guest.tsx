@@ -18,7 +18,7 @@ const Guest = () => {
         if (guestName === "") {
             setError(true);
         } else {
-            history.push("/quiz");
+            history.push("/guest-quiz");
         }
     }, [guestName, history]);
 

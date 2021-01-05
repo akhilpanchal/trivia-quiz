@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout, Spin } from "antd";
 import { HeartFilled } from "@ant-design/icons";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Switch } from "react-router-dom";
 
 import "antd/dist/antd.css";
 import "./styles/App.css";
@@ -9,12 +9,13 @@ import "./styles/App.css";
 import CurrentUserContext from "./CurrentUserContext";
 import { RouteAuthenticated, RouteUnauthenticated} from "./components/routeUtils"
 import Login from "./components/Login";
-import Quiz from "./components/Quiz";
-import Welcome from "./components/Welcome";
+import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import Signout from "./components/Signout";
 import firebase from "firebase";
 import Guest from "./components/Guest";
+import UserQuiz from "./components/quiz/UserQuiz";
+import GuestQuiz from "./components/quiz/GuestQuiz";
 
 const { Footer } = Layout;
 
@@ -41,8 +42,9 @@ function App() {
                                     <Switch>
                                         <RouteUnauthenticated path="/login" component={Login} />
                                         <RouteUnauthenticated path="/guest" component={Guest} />
-                                        <RouteAuthenticated path="/dashboard" component={Welcome} />
-                                        <Route path="/quiz" component={Quiz} />
+                                        <RouteUnauthenticated path="/guest-quiz" component={GuestQuiz} />
+                                        <RouteAuthenticated path="/dashboard" component={Dashboard} />
+                                        <RouteAuthenticated path="/quiz" component={UserQuiz} />
                                         <RouteUnauthenticated path="" component={Home} />
                                     </Switch>
                                 </div>

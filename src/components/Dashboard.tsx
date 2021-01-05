@@ -2,11 +2,10 @@ import { Button } from "antd";
 import React from "react";
 import { useHistory} from "react-router-dom";
 import CurrentUserContext from "../CurrentUserContext"
-import { setUser } from "../service/user";
 
 
-const Welcome = () => {
-    const { email, displayName } = React.useContext(CurrentUserContext);
+const Dashboard = () => {
+    const { displayName } = React.useContext(CurrentUserContext);
 
     const history = useHistory();
 
@@ -23,4 +22,4 @@ const Welcome = () => {
     )
 };
 
-export default Welcome;
+export default Dashboard;
